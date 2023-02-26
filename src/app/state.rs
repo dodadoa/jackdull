@@ -75,8 +75,13 @@ impl AppState {
 
     pub fn add_char(&mut self, c: &char) {
         if let Self::Initialized { typed_text, .. } = self {
-            let new_text = format!("{}{}", typed_text, c);
-            *typed_text = new_text;
+            typed_text.push(*c);
+        }
+    }
+
+    pub fn remove_char(&mut self) {
+        if let Self::Initialized { typed_text, .. } = self {
+            typed_text.pop();
         }
     }
 }

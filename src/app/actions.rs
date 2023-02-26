@@ -7,12 +7,13 @@ use crate::inputs::key::Key;
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub enum Action {
     Quit,
-    Typing(char)
+    Typing(char),
+    BackwardDeleteChar,
 }
 
 impl Action {
     pub fn iterator() -> Iter<'static, Action> {
-        static ACTIONS: [Action; 28] = [
+        static ACTIONS: [Action; 29] = [
             Action::Quit,
             Action::Typing('a'),
             Action::Typing('b'),
@@ -40,7 +41,8 @@ impl Action {
             Action::Typing('x'),
             Action::Typing('y'),
             Action::Typing('z'),
-            Action::Typing(' ')
+            Action::Typing(' '),
+            Action::BackwardDeleteChar,
         ];
         ACTIONS.iter()
     }
@@ -75,6 +77,7 @@ impl Action {
             Action::Typing('y') => &[Key::Char('y')],
             Action::Typing('z') => &[Key::Char('z')],
             Action::Typing(' ') => &[Key::Char(' ')],
+            Action::BackwardDeleteChar => &[Key::Backspace],
             _ => panic!("should not reach")
         }
     }
@@ -111,6 +114,7 @@ impl Display for Action {
             Action::Typing('y') => "y",
             Action::Typing('z') => "z",
             Action::Typing(' ') => " ",
+            Action::BackwardDeleteChar => "remove char",
             _ => panic!("should not reach")
         };
         write!(f, "{}", str)

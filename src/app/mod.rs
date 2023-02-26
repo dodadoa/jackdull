@@ -45,7 +45,11 @@ impl App {
                 Action::Typing(c) => {
                     self.state.add_char(c);
                     AppReturn::Continue
-                }
+                },
+                Action::BackwardDeleteChar => {
+                    self.state.remove_char();
+                    AppReturn::Continue
+                },
             }
         } else {
             warn!("No action accociated to {}", key);
@@ -106,6 +110,8 @@ impl App {
             Action::Typing('x'),
             Action::Typing('y'),
             Action::Typing('z'),
+            Action::Typing(' '),
+            Action::BackwardDeleteChar
         ]
         .into();
         self.state = AppState::initialized()
