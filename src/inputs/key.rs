@@ -35,9 +35,7 @@ pub enum Key {
     PageUp,
     /// Page Down key
     PageDown,
-    F12,
     Char(char),
-    Chars,
     Ctrl(char),
     Alt(char),
     Unknown,
@@ -122,7 +120,6 @@ impl From<event::KeyEvent> for Key {
                 code: event::KeyCode::Tab,
                 ..
             } => Key::Tab,
-
             event::KeyEvent {
                 code: event::KeyCode::Char(c),
                 modifiers: event::KeyModifiers::ALT,
