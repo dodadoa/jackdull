@@ -124,4 +124,8 @@ impl App {
     pub fn slept(&mut self) {
         self.state.incr_sleep();
     }
+
+    pub fn load_text(&mut self, text: String) {
+        self.state.set_to_type(text)
+    }
 }

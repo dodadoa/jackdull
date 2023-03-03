@@ -16,7 +16,7 @@ pub mod app;
 pub mod inputs;
 pub mod io;
 
-pub async fn start_ui(app: &Arc<tokio::sync::Mutex<App>>) -> Result<()> {
+pub async fn start_app(app: &Arc<tokio::sync::Mutex<App>>) -> Result<()> {
 
     let stdout = stdout();
     crossterm::terminal::enable_raw_mode()?;
@@ -28,7 +28,6 @@ pub async fn start_ui(app: &Arc<tokio::sync::Mutex<App>>) -> Result<()> {
 
     let tick_rate = Duration::from_millis(200);
     let mut events = Events::new(tick_rate);
-
 
     {
         let mut app = app.lock().await;

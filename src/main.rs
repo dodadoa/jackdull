@@ -5,7 +5,7 @@ use log::LevelFilter;
 use jackdull::app::App;
 use jackdull::io::handler::IoAsyncHandler;
 use jackdull::io::IoEvent;
-use jackdull::start_ui;
+use jackdull::start_app;
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
         }
     });
 
-    start_ui(&app_ui).await?;
+    start_app(&app_ui).await?;
 
     Ok(())
 }

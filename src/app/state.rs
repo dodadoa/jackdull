@@ -7,7 +7,8 @@ pub enum AppState {
         duration: Duration,
         counter_sleep: u32,
         counter_tick: u64,
-        typed_text: String
+        typed_text: String,
+        to_type: String
     },
 }
 
@@ -17,11 +18,13 @@ impl AppState {
         let counter_sleep = 0;
         let counter_tick = 0;
         let typed_text = "".to_owned();
+        let to_type = "".to_owned();
         Self::Initialized {
             duration,
             counter_sleep,
             counter_tick,
-            typed_text
+            typed_text,
+            to_type
         }
     }
 
@@ -70,6 +73,20 @@ impl AppState {
             Some(typed_text.to_owned())
         } else {
             None
+        }
+    }
+
+    pub fn to_type(&self) -> Option<String> {
+        if let Self::Initialized { to_type, .. } = self {
+            Some(to_type.to_owned())
+        } else {
+            None
+        }
+    }
+
+    pub fn set_to_type(&mut self, to_type: String) {
+        if let Self::Initialized { to_type: to_type_mut, .. } = self {
+            *to_type_mut = to_type;
         }
     }
 

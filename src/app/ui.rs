@@ -91,10 +91,17 @@ fn draw_body<'a>(loading: bool, state: &AppState) -> Paragraph<'a> {
         String::default()
     };
 
+    let loaded_text = if let Some(to_type) = state.to_type() {
+        format!("{}", to_type)
+    } else {
+        String::default()
+    };
+
     Paragraph::new(vec![
         Spans::from(Span::raw(initialized_text)),
         Spans::from(Span::raw(loading_text)),
-        Spans::from(Span::raw(typed))
+        Spans::from(Span::raw(loaded_text)),
+        Spans::from(Span::raw(typed)),
     ])
     .style(Style::default().fg(Color::LightCyan))
     .alignment(Alignment::Left)

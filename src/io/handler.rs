@@ -5,7 +5,7 @@ use eyre::Result;
 use log::{error, info};
 
 use super::IoEvent;
-use crate::app::App;
+use crate::{app::App, io::file::read_file};
 
 pub struct IoAsyncHandler {
     app: Arc<tokio::sync::Mutex<App>>,
@@ -32,9 +32,13 @@ impl IoAsyncHandler {
 
     async fn do_initialize(&mut self) -> Result<()> {
         info!("🚀 Initialize the application");
+
         let mut app = self.app.lock().await;
         tokio::time::sleep(Duration::from_secs(1)).await;
         app.initialized();
+        let data_from_file = read_file().await;
+        app.load_text(data_from_file);
+
         info!("👍 Application initialized");
 
         Ok(())
