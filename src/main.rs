@@ -23,7 +23,6 @@ async fn main() -> Result<()> {
         while let Some(io_event) = sync_io_rx.recv().await {
             handler.handle_io_event(io_event).await;
         }
-        handler.handle_io_event(IoEvent::Timer).await;
     });
 
     start_app(&app_ui).await?;
