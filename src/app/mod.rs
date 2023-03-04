@@ -67,9 +67,7 @@ impl App {
     }
 
     pub async fn dispatch(&mut self, action: IoEvent) {
-        self.is_loading = true;
         if let Err(e) = self.io_tx.send(action).await {
-            self.is_loading = false;
             error!("Error from dispatch {}", e);
         };
     }

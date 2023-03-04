@@ -26,13 +26,21 @@ pub async fn start_app(app: &Arc<tokio::sync::Mutex<App>>) -> Result<()> {
     terminal.hide_cursor()?;
 
 
-    let tick_rate = Duration::from_millis(200);
+    let tick_rate = Duration::from_millis(100);
     let mut events = Events::new(tick_rate);
 
     {
         let mut app = app.lock().await;
         app.dispatch(IoEvent::Initialize).await;
     }
+
+    let app_clock = Arc::clone(&app);
+    tokio::spawn(async move {
+        loop {
+            tokio::time::sleep(Duration::from_secs(1)).await;
+            app_clock.lock().await.dispatch(IoEvent::Timer).await;
+        }
+    });
 
     loop {
         let mut app = app.lock().await;

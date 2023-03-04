@@ -38,6 +38,7 @@ impl IoAsyncHandler {
         app.initialized();
         let data_from_file = read_file().await;
         app.load_text(data_from_file);
+        app.loaded();
 
         info!("👍 Application initialized");
 
