@@ -19,7 +19,6 @@ impl IoAsyncHandler {
     pub async fn handle_io_event(&mut self, io_event: IoEvent) {
         let result = match io_event {
             IoEvent::Initialize => self.do_initialize().await,
-            IoEvent::Sleep(duration) => self.do_sleep(duration).await,
         };
 
         if let Err(err) = result {
@@ -40,16 +39,6 @@ impl IoAsyncHandler {
         app.load_text(data_from_file);
 
         info!("👍 Application initialized");
-
-        Ok(())
-    }
-
-    async fn do_sleep(&mut self, duration: Duration) -> Result<()> {
-        info!("😴 Go sleeping for {:?}...", duration);
-        tokio::time::sleep(duration).await;
-        info!("⏰ Wake up !");
-        let mut app = self.app.lock().await;
-        app.slept();
 
         Ok(())
     }

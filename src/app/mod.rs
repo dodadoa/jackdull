@@ -58,7 +58,7 @@ impl App {
     }
 
     pub async fn update_on_tick(&mut self) -> AppReturn {
-        self.state.incr_tick();
+        self.state.increase_duaration_tick();
         AppReturn::Continue
     }
 
@@ -145,10 +145,6 @@ impl App {
 
     pub fn loaded(&mut self) {
         self.is_loading = false;
-    }
-
-    pub fn slept(&mut self) {
-        self.state.incr_sleep();
     }
 
     pub fn load_text(&mut self, text: String) {
