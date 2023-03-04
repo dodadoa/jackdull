@@ -1,14 +1,20 @@
-use serde_json::Value;
+use serde::{Deserialize, Serialize};
 use std::fs;
 use log::debug;
 
-pub async fn read_file() -> String {
-    let value = {
-        let file_content = fs::read_to_string("./texts/test.json").expect("LogRocket: error reading file");
-        serde_json::from_str::<Value>(&file_content).expect("LogRocket: error serializing to JSON")
-    };
-    
-    debug!("{:?}", value["content"].to_string());
-    value["content"].to_string()
+#[derive(Serialize, Deserialize, Debug)]
+struct TypingFile {
+    from: String,
+    content: String,
+    url: String
 }
 
+pub async fn read_file() -> String {
+    let value= {
+        let file_content = fs::read_to_string("./texts/1.json").expect("LogRocket: error reading file");
+        serde_json::from_str::<TypingFile>(&file_content).expect("error serializing to JSON")
+    };
+    
+    debug!("{:?}", value);
+    value.content.to_string()
+}
