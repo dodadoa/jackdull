@@ -36,7 +36,6 @@ pub async fn start_app(app: &Arc<tokio::sync::Mutex<App>>) -> Result<()> {
 
     loop {
         let mut app = app.lock().await;
-        app.dispatch(IoEvent::Timer).await;
 
         terminal.draw(|rect| ui::draw(rect, &app))?;
 
