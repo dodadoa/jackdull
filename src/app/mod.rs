@@ -62,6 +62,10 @@ impl App {
         AppReturn::Continue
     }
 
+    pub async fn tick(&mut self) -> AppReturn {
+        AppReturn::Continue
+    }
+
     pub async fn dispatch(&mut self, action: IoEvent) {
         self.is_loading = true;
         if let Err(e) = self.io_tx.send(action).await {
@@ -70,9 +74,6 @@ impl App {
         };
     }
 
-    pub fn actions(&self) -> &Actions {
-        &self.actions
-    }
     pub fn state(&self) -> &AppState {
         &self.state
     }

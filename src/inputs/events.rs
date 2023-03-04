@@ -47,7 +47,7 @@ impl Events {
     }
 
     pub async fn next(&mut self) -> InputEvent {
-        self.rx.recv().await.unwrap_or(InputEvent::Tick)
+        self.rx.recv().await.unwrap()
     }
 
     pub fn close(&mut self) {

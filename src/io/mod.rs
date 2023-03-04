@@ -4,5 +4,6 @@ pub mod file;
 // For this dummy application we only need two IO event
 #[derive(Debug, Clone)]
 pub enum IoEvent {
-    Initialize,      // Launch to initialize the application
+    Initialize, 
+    Timer,
 }

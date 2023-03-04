@@ -36,12 +36,13 @@ pub async fn start_app(app: &Arc<tokio::sync::Mutex<App>>) -> Result<()> {
 
     loop {
         let mut app = app.lock().await;
+        app.dispatch(IoEvent::Timer).await;
 
         terminal.draw(|rect| ui::draw(rect, &app))?;
 
         let result = match events.next().await {
             InputEvent::Input(key) => app.do_action(key).await,
-            InputEvent::Tick => app.update_on_tick().await,
+            InputEvent::Tick => app.tick().await,
         };
 
         if result == AppReturn::Exit {
