@@ -106,6 +106,12 @@ impl AppState {
             *to_type = "Time is up!".to_owned();
         }
     }
+
+    pub fn set_message_finished(&mut self) {
+        if let Self::Initialized { to_type, .. } = self {
+            *to_type = "Finished!".to_owned();
+        }
+    }
 }
 
 impl Default for AppState {

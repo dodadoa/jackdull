@@ -21,6 +21,7 @@ impl IoAsyncHandler {
             IoEvent::Initialize => self.do_initialize().await,
             IoEvent::Timer => self.timer().await,
             IoEvent::TimeUp => self.timeup().await,
+            IoEvent::FinishText => self.finished_text().await,
         };
 
         if let Err(err) = result {
@@ -55,6 +56,14 @@ impl IoAsyncHandler {
         let mut app = self.app.lock().await;
         app.send_message_timeup().await;
         info!("Time is up");
+
+        Ok(())
+    }
+
+    async fn finished_text(&mut self) -> Result<()> {
+        let mut app = self.app.lock().await;
+        app.send_message_finished().await;
+        info!("Finished text");
 
         Ok(())
     }

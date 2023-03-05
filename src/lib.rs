@@ -57,6 +57,10 @@ pub async fn start_app(app: &Arc<tokio::sync::Mutex<App>>) -> Result<()> {
             app.dispatch(IoEvent::TimeUp).await;
         }
 
+        if app.state().is_finished() {
+            app.dispatch(IoEvent::FinishText).await;
+        }
+
         if result == AppReturn::Exit {
             events.close();
             break;
