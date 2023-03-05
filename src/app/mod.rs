@@ -62,6 +62,11 @@ impl App {
         AppReturn::Continue
     }
 
+    pub async fn send_message_timeup(&mut self) -> AppReturn {
+        self.state.set_message_timeup();
+        AppReturn::Continue
+    }
+
     pub async fn tick(&mut self) -> AppReturn {
         AppReturn::Continue
     }

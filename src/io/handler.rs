@@ -20,14 +20,12 @@ impl IoAsyncHandler {
         let result = match io_event {
             IoEvent::Initialize => self.do_initialize().await,
             IoEvent::Timer => self.timer().await,
+            IoEvent::TimeUp => self.timeup().await,
         };
 
         if let Err(err) = result {
             error!("Oops, something wrong happen: {:?}", err);
         }
-
-        let mut app = self.app.lock().await;
-        app.loaded();
     }
 
     async fn do_initialize(&mut self) -> Result<()> {
@@ -38,7 +36,7 @@ impl IoAsyncHandler {
         app.initialized();
         let data_from_file = read_file().await;
         app.load_text(data_from_file);
-        app.loaded();
+
 
         info!("👍 Application initialized");
 
@@ -49,6 +47,14 @@ impl IoAsyncHandler {
         let mut app = self.app.lock().await;
         app.update_on_tick().await;
         info!("Increase timer");
+
+        Ok(())
+    }
+
+    async fn timeup(&mut self) -> Result<()> {
+        let mut app = self.app.lock().await;
+        app.send_message_timeup().await;
+        info!("Time is up");
 
         Ok(())
     }

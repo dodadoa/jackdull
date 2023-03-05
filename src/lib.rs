@@ -36,6 +36,7 @@ pub async fn start_app(app: &Arc<tokio::sync::Mutex<App>>) -> Result<()> {
 
     let app_clock = Arc::clone(&app);
     tokio::spawn(async move {
+        tokio::time::sleep(Duration::from_secs(1)).await;
         loop {
             tokio::time::sleep(Duration::from_secs(1)).await;
             app_clock.lock().await.dispatch(IoEvent::Timer).await;
@@ -51,6 +52,10 @@ pub async fn start_app(app: &Arc<tokio::sync::Mutex<App>>) -> Result<()> {
             InputEvent::Input(key) => app.do_action(key).await,
             InputEvent::Tick => app.tick().await,
         };
+
+        if app.state().is_time_over() {
+            app.dispatch(IoEvent::TimeUp).await;
+        }
 
         if result == AppReturn::Exit {
             events.close();

@@ -6,4 +6,5 @@ pub mod file;
 pub enum IoEvent {
     Initialize, 
     Timer,
+    TimeUp
 }

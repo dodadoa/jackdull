@@ -51,6 +51,22 @@ impl AppState {
         }
     }
 
+    pub fn is_finished(&self) -> bool {
+        if let Self::Initialized { typed_text, to_type, .. } = self {
+            typed_text == to_type
+        } else {
+            false
+        }
+    }
+
+    pub fn is_time_over(&self) -> bool {
+        if let Self::Initialized { duration, .. } = self {
+            *duration >= Duration::from_secs(60)
+        } else {
+            false
+        }
+    }
+
     pub fn typed_text(&self) -> Option<String> {
         if let Self::Initialized { typed_text, .. } = self {
             Some(typed_text.to_owned())
@@ -82,6 +98,12 @@ impl AppState {
     pub fn remove_char(&mut self) {
         if let Self::Initialized { typed_text, .. } = self {
             typed_text.pop();
+        }
+    }
+
+    pub fn set_message_timeup(&mut self) {
+        if let Self::Initialized { to_type, .. } = self {
+            *to_type = "Time is up!".to_owned();
         }
     }
 }
