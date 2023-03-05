@@ -36,10 +36,10 @@ impl IoAsyncHandler {
         tokio::time::sleep(Duration::from_secs(1)).await;
         app.initialized();
         let data_from_file = read_file().await;
-        app.load_text(data_from_file);
-
+        app.load_text(data_from_file.content);
 
         info!("👍 Application initialized");
+        app.loaded();
 
         Ok(())
     }
@@ -62,7 +62,7 @@ impl IoAsyncHandler {
 
     async fn finished_text(&mut self) -> Result<()> {
         let mut app = self.app.lock().await;
-        app.send_message_finished().await;
+        app.finished_text().await;
         info!("Finished text");
 
         Ok(())

@@ -7,7 +7,7 @@ pub enum AppState {
         duration: Duration,
         counter_tick: u64,
         typed_text: String,
-        to_type: String
+        to_type: String,
     },
 }
 
@@ -17,11 +17,12 @@ impl AppState {
         let counter_tick = 0;
         let typed_text = "".to_owned();
         let to_type = "".to_owned();
+
         Self::Initialized {
             duration,
             counter_tick,
             typed_text,
-            to_type
+            to_type,
         }
     }
 
@@ -112,6 +113,12 @@ impl AppState {
             let mock_num_words = 10;
             let result_text = format!("Finished! Your speed is {:?} WPM", 60 * mock_num_words / duration.as_secs());
             *to_type = result_text;
+        }
+    }
+
+    pub fn stop_timer(&mut self) {
+        if let Self::Initialized { duration, .. } = self {
+            *duration = Duration::from_secs(1);
         }
     }
 }

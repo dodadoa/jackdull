@@ -113,6 +113,7 @@ fn draw_duration(duration: &Duration) -> LineGauge {
     let sec = duration.as_secs();
     let label = format!("{}s", sec);
     let ratio = sec as f64 / 60.0;
+
     LineGauge::default()
         .block(
             Block::default()

@@ -67,8 +67,9 @@ impl App {
         AppReturn::Continue
     }
 
-    pub async fn send_message_finished(&mut self) -> AppReturn {
+    pub async fn finished_text(&mut self) -> AppReturn {
         self.state.set_message_finished();
+        self.state.stop_timer();
         AppReturn::Continue
     }
 
