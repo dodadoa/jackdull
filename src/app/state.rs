@@ -108,8 +108,10 @@ impl AppState {
     }
 
     pub fn set_message_finished(&mut self) {
-        if let Self::Initialized { to_type, .. } = self {
-            *to_type = "Finished!".to_owned();
+        if let Self::Initialized { to_type, duration, .. } = self {
+            let mock_num_words = 10;
+            let result_text = format!("Finished! Your speed is {:?} WPM", 60 * mock_num_words / duration.as_secs());
+            *to_type = result_text;
         }
     }
 }
