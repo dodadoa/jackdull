@@ -3,18 +3,29 @@ use std::fs;
 use log::debug;
 
 #[derive(Serialize, Deserialize, Debug)]
-struct TypingFile {
-    from: String,
-    content: String,
-    url: String
+pub struct TypingFile {
+    pub from: String,
+    pub content: String,
+    pub url: String,
 }
 
-pub async fn read_file() -> String {
+pub struct TypingFileDisplay {
+    pub from: String,
+    pub content: String,
+    pub url: String,
+    pub words_count: u32,
+}
+
+pub async fn read_file() -> TypingFileDisplay {
     let value= {
         let file_content = fs::read_to_string("./texts/1.json").expect("LogRocket: error reading file");
         serde_json::from_str::<TypingFile>(&file_content).expect("error serializing to JSON")
     };
     
-    debug!("{:?}", value);
-    value.content.to_string()
+    TypingFileDisplay {
+        from: value.from,
+        content: value.content.clone(),
+        url: value.url,
+        words_count: value.content.split_whitespace().count() as u32,
+    }
 }
