@@ -17,6 +17,7 @@
 - [x] time up!
 - [ ] menu ui
 - [ ] fix calculating wpm, it seems double calculating
+- [ ] display text information
 - [ ] more texts
 - [ ] maybe loading text from website ?
 - [ ] make it up to cargo, so can install via `cargo install`
