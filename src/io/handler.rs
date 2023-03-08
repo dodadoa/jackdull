@@ -37,6 +37,7 @@ impl IoAsyncHandler {
         app.initialized();
         let data_from_file = read_file().await;
         app.load_text(data_from_file.content);
+        app.set_words_count(data_from_file.words_count);
 
         info!("👍 Application initialized");
         app.loaded();

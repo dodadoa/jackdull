@@ -161,4 +161,8 @@ impl App {
     pub fn load_text(&mut self, text: String) {
         self.state.set_to_type(text)
     }
+
+    pub fn set_words_count(&mut self, words_count: u32) {
+        self.state.set_words_count(words_count)
+    }
 }

@@ -8,7 +8,9 @@ pub enum AppState {
         counter_tick: u64,
         typed_text: String,
         to_type: String,
+        words_count: u32,
     },
+    Menu
 }
 
 impl AppState {
@@ -17,12 +19,14 @@ impl AppState {
         let counter_tick = 0;
         let typed_text = "".to_owned();
         let to_type = "".to_owned();
+        let words_count = 0;
 
         Self::Initialized {
             duration,
             counter_tick,
             typed_text,
             to_type,
+            words_count
         }
     }
 
@@ -109,9 +113,8 @@ impl AppState {
     }
 
     pub fn set_message_finished(&mut self) {
-        if let Self::Initialized { to_type, duration, .. } = self {
-            let mock_num_words = 10;
-            let result_text = format!("Finished! Your speed is {:?} WPM", 60 * mock_num_words / duration.as_secs());
+        if let Self::Initialized { to_type, duration, words_count, .. } = self {
+            let result_text = format!("Finished! Your speed is {:?} WPM", 60 * *words_count as u64 / duration.as_secs());
             *to_type = result_text;
         }
     }
@@ -119,6 +122,12 @@ impl AppState {
     pub fn stop_timer(&mut self) {
         if let Self::Initialized { duration, .. } = self {
             *duration = Duration::from_secs(1);
+        }
+    }
+
+    pub fn set_words_count(&mut self, wc: u32) {
+        if let Self::Initialized { words_count, .. } = self {
+            *words_count = wc
         }
     }
 }
