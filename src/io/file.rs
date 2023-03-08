@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 use std::fs;
-use log::debug;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct TypingFile {

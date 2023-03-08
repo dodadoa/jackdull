@@ -4,4 +4,10 @@
 - texts got from [anarchist library](https://theanarchistlibrary)
 
 ## Architecture
-![image](docs/architecture.svg)
+![image](docs/architecture.png)
+
+## Todo
+[] menu ui
+[] fix calculating the correct wpm
+[] more texts
+[] maybe loading text from website ?
