@@ -13,7 +13,7 @@ pub enum Action {
 
 impl Action {
     pub fn iterator() -> Iter<'static, Action> {
-        static ACTIONS: [Action; 57] = [
+        static ACTIONS: [Action; 59] = [
             Action::Quit,
             Action::Typing('a'),
             Action::Typing('b'),
@@ -70,6 +70,8 @@ impl Action {
             Action::Typing(' '),
             Action::Typing('.'),
             Action::Typing('\''),
+            Action::Typing(')'),
+            Action::Typing('('),
             Action::BackwardDeleteChar,
         ];
         ACTIONS.iter()
@@ -133,6 +135,8 @@ impl Action {
             Action::Typing('Z') => &[Key::Char('Z')],
             Action::Typing('.') => &[Key::Char('.')],
             Action::Typing('\'') => &[Key::Char('\'')],
+            Action::Typing('(') => &[Key::Char('(')],
+            Action::Typing(')') => &[Key::Char(')')],
             Action::BackwardDeleteChar => &[Key::Backspace],
             _ => panic!("should not reach"),
         }
@@ -198,6 +202,8 @@ impl Display for Action {
             Action::Typing(' ') => " ",
             Action::Typing('.') => ".",
             Action::Typing('\'') => "\'",
+            Action::Typing('(') => "(",
+            Action::Typing(')') => ")",
 
             Action::BackwardDeleteChar => "remove char",
             _ => panic!("should not reach"),
