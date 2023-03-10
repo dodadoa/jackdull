@@ -159,6 +159,10 @@ impl App {
         self.is_loading = false;
     }
 
+    pub fn loading(&mut self) {
+        self.is_loading = true;
+    }
+
     pub fn load_text(&mut self, text: String) {
         self.state.set_to_type(text)
     }

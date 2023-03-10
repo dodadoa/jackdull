@@ -33,6 +33,8 @@ impl IoAsyncHandler {
         info!("🚀 Initialize the application");
 
         let mut app = self.app.lock().await;
+        app.loading();
+
         tokio::time::sleep(Duration::from_secs(1)).await;
         app.initialized();
 
@@ -43,6 +45,7 @@ impl IoAsyncHandler {
         app.set_words_count(data_from_file.words_count);
 
         info!("👍 Application initialized");
+
         app.loaded();
 
         Ok(())

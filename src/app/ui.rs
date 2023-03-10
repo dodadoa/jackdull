@@ -76,20 +76,25 @@ fn check_size(rect: &Rect) {
 
 fn draw_body<'a>(loading: bool, state: &AppState) -> Paragraph<'a> {
     let initialized_text = if state.is_initialized() {
-        "Initialized"
+        ""
     } else {
         "Not Initialized !"
     };
     let loading_text = if loading { "Loading..." } else { "" };
 
-    let typed = if let Some(typed_text) = state.typed_text() {
+    let typing = if let Some(typed_text) = state.typed_text() {
         format!("{}", typed_text)
     } else {
         String::default()
     };
 
     let typing_information = if let Some(typing_information) = state.typing_information() {
-        typing_information
+        TypingFileDisplay {
+            from: format!("From: {}", typing_information.from),
+            url: format!("Url: {}", typing_information.url),
+            content: typing_information.content,
+            words_count: typing_information.words_count,
+        }
     } else {    
         TypingFileDisplay {
             from: "".to_owned(),
@@ -102,10 +107,12 @@ fn draw_body<'a>(loading: bool, state: &AppState) -> Paragraph<'a> {
     Paragraph::new(vec![
         Spans::from(Span::raw(initialized_text)),
         Spans::from(Span::raw(loading_text)),
+        Spans::from(Span::styled(typing_information.from, Style::default().fg(Color::Yellow).add_modifier(Modifier::ITALIC))),
+        Spans::from(Span::styled(typing_information.url, Style::default().fg(Color::Blue).add_modifier(Modifier::ITALIC))),
+        Spans::from(Span::raw("")),
         Spans::from(Span::raw(typing_information.content)),
-        Spans::from(Span::raw(typing_information.from)),
-        Spans::from(Span::raw(typing_information.url)),
-        Spans::from(Span::raw(typed)),
+        Spans::from(Span::raw("")),
+        Spans::from(Span::raw(typing)),
     ])
     .style(Style::default().fg(Color::LightCyan))
     .alignment(Alignment::Left)
