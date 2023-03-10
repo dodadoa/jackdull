@@ -121,9 +121,8 @@ fn draw_typing_information<'a>(
         Block::default()
             .title("Text Information")
             .border_style(Style::default().fg(Color::White).bg(Color::Black))
-            .borders(Borders::ALL)
+            .borders(Borders::ALL),
     )
-    
 }
 
 fn draw_typing_text<'a>(text: String) -> Paragraph<'a> {
@@ -134,8 +133,8 @@ fn draw_typing_text<'a>(text: String) -> Paragraph<'a> {
         .alignment(Alignment::Left)
         .block(
             Block::default()
-            .border_style(Style::default().fg(Color::White).bg(Color::Black))
-            .borders(Borders::ALL)
+                .border_style(Style::default().fg(Color::White).bg(Color::Black))
+                .borders(Borders::ALL),
         )
 }
 
@@ -151,8 +150,8 @@ fn draw_typing_from_user<'a>(state: &AppState) -> Paragraph<'a> {
         .alignment(Alignment::Left)
         .block(
             Block::default()
-            .border_style(Style::default().fg(Color::White).bg(Color::Black))
-            .borders(Borders::ALL)
+                .border_style(Style::default().fg(Color::White).bg(Color::Black))
+                .borders(Borders::ALL),
         )
 }
 
