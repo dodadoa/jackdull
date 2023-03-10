@@ -35,7 +35,10 @@ impl IoAsyncHandler {
         let mut app = self.app.lock().await;
         tokio::time::sleep(Duration::from_secs(1)).await;
         app.initialized();
+
         let data_from_file = read_file().await;
+        app.set_typing_information(data_from_file.clone());
+
         app.load_text(data_from_file.content);
         app.set_words_count(data_from_file.words_count);
 

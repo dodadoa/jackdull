@@ -8,6 +8,7 @@ pub struct TypingFile {
     pub url: String,
 }
 
+#[derive(Debug, Clone)]
 pub struct TypingFileDisplay {
     pub from: String,
     pub content: String,

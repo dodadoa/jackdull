@@ -1,5 +1,7 @@
 use std::time::Duration;
 
+use crate::io::file::TypingFileDisplay;
+
 #[derive(Clone)]
 pub enum AppState {
     Init,
@@ -9,6 +11,7 @@ pub enum AppState {
         typed_text: String,
         to_type: String,
         words_count: u32,
+        typing_information: TypingFileDisplay
     },
     Menu
 }
@@ -20,13 +23,20 @@ impl AppState {
         let typed_text = "".to_owned();
         let to_type = "".to_owned();
         let words_count = 0;
+        let typing_information = TypingFileDisplay {
+            from: "".to_owned(),
+            content: "".to_owned(),
+            url: "".to_owned(),
+            words_count: 0
+        };
 
         Self::Initialized {
             duration,
             counter_tick,
             typed_text,
             to_type,
-            words_count
+            words_count,
+            typing_information
         }
     }
 
@@ -91,6 +101,20 @@ impl AppState {
     pub fn set_to_type(&mut self, to_type: String) {
         if let Self::Initialized { to_type: to_type_mut, .. } = self {
             *to_type_mut = to_type;
+        }
+    }
+
+    pub fn typing_information(&self) -> Option<TypingFileDisplay> {
+        if let Self::Initialized { typing_information, .. } = self {
+            Some(typing_information.to_owned())
+        } else {
+            None
+        }
+    }
+
+    pub fn set_typing_information(&mut self, typing_information: TypingFileDisplay) {
+        if let Self::Initialized { typing_information: typing_information_mut, .. } = self {
+            *typing_information_mut = typing_information;
         }
     }
 

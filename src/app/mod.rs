@@ -5,6 +5,7 @@ use self::state::AppState;
 use crate::app::actions::Action;
 use crate::inputs::key::Key;
 use crate::io::IoEvent;
+use crate::io::file::TypingFileDisplay;
 
 pub mod actions;
 pub mod state;
@@ -160,6 +161,10 @@ impl App {
 
     pub fn load_text(&mut self, text: String) {
         self.state.set_to_type(text)
+    }
+
+    pub fn set_typing_information(&mut self, typing_information: TypingFileDisplay) {
+        self.state.set_typing_information(typing_information)
     }
 
     pub fn set_words_count(&mut self, words_count: u32) {

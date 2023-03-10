@@ -21,3 +21,4 @@
 - [ ] more texts
 - [ ] maybe loading text from website ?
 - [ ] make it up to cargo, so can install via `cargo install`
+- [ ] display the wrong character that player type

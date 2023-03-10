@@ -11,6 +11,7 @@ use tui_logger::TuiLoggerWidget;
 
 use super::state::AppState;
 use crate::app::App;
+use crate::io::file::TypingFileDisplay;
 
 pub fn draw<B>(rect: &mut Frame<B>, app: &App)
 where
@@ -87,16 +88,23 @@ fn draw_body<'a>(loading: bool, state: &AppState) -> Paragraph<'a> {
         String::default()
     };
 
-    let loaded_text = if let Some(to_type) = state.to_type() {
-        format!("{}", to_type)
-    } else {
-        String::default()
+    let typing_information = if let Some(typing_information) = state.typing_information() {
+        typing_information
+    } else {    
+        TypingFileDisplay {
+            from: "".to_owned(),
+            content: "".to_owned(),
+            url: "".to_owned(),
+            words_count: 0
+        }
     };
 
     Paragraph::new(vec![
         Spans::from(Span::raw(initialized_text)),
         Spans::from(Span::raw(loading_text)),
-        Spans::from(Span::raw(loaded_text)),
+        Spans::from(Span::raw(typing_information.content)),
+        Spans::from(Span::raw(typing_information.from)),
+        Spans::from(Span::raw(typing_information.url)),
         Spans::from(Span::raw(typed)),
     ])
     .style(Style::default().fg(Color::LightCyan))
