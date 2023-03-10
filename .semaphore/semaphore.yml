@@ -11,6 +11,7 @@ blocks:
         - name: 'Formatter and linter'
           commands:
             - checkout
+            - snap install rustup
             - rustup component add rustfmt clippy
             - cargo fmt --verbose --all -- --check
             - cargo clippy
