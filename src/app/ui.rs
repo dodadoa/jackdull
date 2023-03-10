@@ -4,7 +4,7 @@ use symbols::line;
 use tui::backend::Backend;
 use tui::layout::{Alignment, Constraint, Direction, Layout, Rect};
 use tui::style::{Color, Modifier, Style};
-use tui::text::{Span, Spans};
+use tui::text::{Span, Spans, Text};
 use tui::widgets::{Block, BorderType, Borders, LineGauge, Paragraph};
 use tui::{symbols, Frame};
 use tui_logger::TuiLoggerWidget;
@@ -25,9 +25,10 @@ where
         .constraints(
             [
                 Constraint::Length(3),
-                Constraint::Min(10),
+                Constraint::Length(20),
+                Constraint::Length(10),
                 Constraint::Length(3),
-                Constraint::Length(12),
+                Constraint::Length(5),
             ]
             .as_ref(),
         )
@@ -37,20 +38,42 @@ where
     rect.render_widget(title, chunks[0]);
 
     let body_chunks = Layout::default()
-        .direction(Direction::Horizontal)
-        .constraints([Constraint::Min(20), Constraint::Length(32)].as_ref())
+        .direction(Direction::Vertical)
+        .constraints([Constraint::Min(5), Constraint::Min(5)].as_ref())
         .split(chunks[1]);
 
-    let body = draw_body(app.is_loading(), app.state());
+    let typing_information = if let Some(typing_information) = app.state().typing_information() {
+        TypingFileDisplay {
+            from: format!("From: {}", typing_information.from),
+            url: format!("Url: {}", typing_information.url),
+            content: typing_information.content,
+            words_count: typing_information.words_count,
+        }
+    } else {    
+        TypingFileDisplay {
+            from: "".to_owned(),
+            content: "".to_owned(),
+            url: "".to_owned(),
+            words_count: 0
+        }
+    };
+
+    let body = draw_typing_information(typing_information.from, typing_information.url);
     rect.render_widget(body, body_chunks[0]);
+
+    let long_text = draw_typing_text(typing_information.content);
+    rect.render_widget(long_text, body_chunks[1]);
+
+    let typing_from_user = draw_typing_from_user(app.state());
+    rect.render_widget(typing_from_user, chunks[2]);
 
     if let Some(duration) = app.state().duration() {
         let duration_block = draw_duration(duration);
-        rect.render_widget(duration_block, chunks[2]);
+        rect.render_widget(duration_block, chunks[3]);
     }
 
     let logs = draw_logs();
-    rect.render_widget(logs, chunks[3]);
+    rect.render_widget(logs, chunks[4]);
 }
 
 fn draw_title<'a>() -> Paragraph<'a> {
@@ -74,54 +97,33 @@ fn check_size(rect: &Rect) {
     }
 }
 
-fn draw_body<'a>(loading: bool, state: &AppState) -> Paragraph<'a> {
-    let initialized_text = if state.is_initialized() {
-        ""
-    } else {
-        "Not Initialized !"
-    };
-    let loading_text = if loading { "Loading..." } else { "" };
+fn draw_typing_information<'a>(typing_information_from: String, typing_information_url: String) -> Paragraph<'a> {
+    Paragraph::new(vec![
+        Spans::from(Span::styled(typing_information_from, Style::default().fg(Color::Yellow).add_modifier(Modifier::ITALIC))),
+        Spans::from(Span::styled(typing_information_url, Style::default().fg(Color::Blue).add_modifier(Modifier::ITALIC))),
+    ])
+    .style(Style::default().fg(Color::LightCyan))
+    .alignment(Alignment::Left)
+}
 
+fn draw_typing_text<'a>(text: String) -> Paragraph<'a> {
+    let long_text = Text::from(text);
+
+    Paragraph::new(long_text)
+        .style(Style::default().fg(Color::LightCyan))
+        .alignment(Alignment::Left)
+}
+
+fn draw_typing_from_user<'a>(state: &AppState) -> Paragraph<'a> {
     let typing = if let Some(typed_text) = state.typed_text() {
         format!("{}", typed_text)
     } else {
         String::default()
     };
 
-    let typing_information = if let Some(typing_information) = state.typing_information() {
-        TypingFileDisplay {
-            from: format!("From: {}", typing_information.from),
-            url: format!("Url: {}", typing_information.url),
-            content: typing_information.content,
-            words_count: typing_information.words_count,
-        }
-    } else {    
-        TypingFileDisplay {
-            from: "".to_owned(),
-            content: "".to_owned(),
-            url: "".to_owned(),
-            words_count: 0
-        }
-    };
-
-    Paragraph::new(vec![
-        Spans::from(Span::raw(initialized_text)),
-        Spans::from(Span::raw(loading_text)),
-        Spans::from(Span::styled(typing_information.from, Style::default().fg(Color::Yellow).add_modifier(Modifier::ITALIC))),
-        Spans::from(Span::styled(typing_information.url, Style::default().fg(Color::Blue).add_modifier(Modifier::ITALIC))),
-        Spans::from(Span::raw("")),
-        Spans::from(Span::raw(typing_information.content)),
-        Spans::from(Span::raw("")),
-        Spans::from(Span::raw(typing)),
-    ])
-    .style(Style::default().fg(Color::LightCyan))
-    .alignment(Alignment::Left)
-    .block(
-        Block::default()
-            .borders(Borders::ALL)
-            .style(Style::default().fg(Color::White))
-            .border_type(BorderType::Plain),
-    )
+    Paragraph::new(typing)
+        .style(Style::default().fg(Color::LightCyan))
+        .alignment(Alignment::Left)
 }
 
 fn draw_duration(duration: &Duration) -> LineGauge {

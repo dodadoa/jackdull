@@ -149,6 +149,7 @@ impl App {
             Action::Typing('Z'),
             Action::Typing(' '),
             Action::Typing('.'),
+            Action::Typing('\''),
             Action::BackwardDeleteChar
         ]
         .into();
