@@ -17,3 +17,7 @@ blocks:
             - rustup component add rustfmt clippy
             - cargo fmt --verbose --all -- --check
             - cargo clippy
+        - name: 'Test'
+          commands:
+            - checkout
+            - cargo test
