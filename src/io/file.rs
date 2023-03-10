@@ -17,11 +17,12 @@ pub struct TypingFileDisplay {
 }
 
 pub async fn read_file() -> TypingFileDisplay {
-    let value= {
-        let file_content = fs::read_to_string("./texts/1.json").expect("LogRocket: error reading file");
+    let value = {
+        let file_content =
+            fs::read_to_string("./texts/1.json").expect("LogRocket: error reading file");
         serde_json::from_str::<TypingFile>(&file_content).expect("error serializing to JSON")
     };
-    
+
     TypingFileDisplay {
         from: value.from,
         content: value.content.clone(),

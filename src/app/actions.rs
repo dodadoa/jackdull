@@ -134,7 +134,7 @@ impl Action {
             Action::Typing('.') => &[Key::Char('.')],
             Action::Typing('\'') => &[Key::Char('\'')],
             Action::BackwardDeleteChar => &[Key::Backspace],
-            _ => panic!("should not reach")
+            _ => panic!("should not reach"),
         }
     }
 }
@@ -198,9 +198,9 @@ impl Display for Action {
             Action::Typing(' ') => " ",
             Action::Typing('.') => ".",
             Action::Typing('\'') => "\'",
-            
+
             Action::BackwardDeleteChar => "remove char",
-            _ => panic!("should not reach")
+            _ => panic!("should not reach"),
         };
         write!(f, "{}", str)
     }
@@ -274,19 +274,12 @@ mod tests {
 
     #[test]
     fn should_create_actions_from_vec() {
-        let _actions: Actions = vec![
-            Action::Quit,
-        ]
-        .into();
+        let _actions: Actions = vec![Action::Quit].into();
     }
 
     #[test]
     #[should_panic]
     fn should_panic_when_create_actions_conflict_key() {
-        let _actions: Actions = vec![
-            Action::Quit,
-            Action::Quit,
-        ]
-        .into();
+        let _actions: Actions = vec![Action::Quit, Action::Quit].into();
     }
 }

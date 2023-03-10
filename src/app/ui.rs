@@ -49,12 +49,12 @@ where
             content: typing_information.content,
             words_count: typing_information.words_count,
         }
-    } else {    
+    } else {
         TypingFileDisplay {
             from: "".to_owned(),
             content: "".to_owned(),
             url: "".to_owned(),
-            words_count: 0
+            words_count: 0,
         }
     };
 
@@ -97,10 +97,23 @@ fn check_size(rect: &Rect) {
     }
 }
 
-fn draw_typing_information<'a>(typing_information_from: String, typing_information_url: String) -> Paragraph<'a> {
+fn draw_typing_information<'a>(
+    typing_information_from: String,
+    typing_information_url: String,
+) -> Paragraph<'a> {
     Paragraph::new(vec![
-        Spans::from(Span::styled(typing_information_from, Style::default().fg(Color::Yellow).add_modifier(Modifier::ITALIC))),
-        Spans::from(Span::styled(typing_information_url, Style::default().fg(Color::Blue).add_modifier(Modifier::ITALIC))),
+        Spans::from(Span::styled(
+            typing_information_from,
+            Style::default()
+                .fg(Color::Yellow)
+                .add_modifier(Modifier::ITALIC),
+        )),
+        Spans::from(Span::styled(
+            typing_information_url,
+            Style::default()
+                .fg(Color::Blue)
+                .add_modifier(Modifier::ITALIC),
+        )),
     ])
     .style(Style::default().fg(Color::LightCyan))
     .alignment(Alignment::Left)
@@ -132,11 +145,7 @@ fn draw_duration(duration: &Duration) -> LineGauge {
     let ratio = sec as f64 / 60.0;
 
     LineGauge::default()
-        .block(
-            Block::default()
-                .borders(Borders::ALL)
-                .title("Timer"),
-        )
+        .block(Block::default().borders(Borders::ALL).title("Timer"))
         .gauge_style(
             Style::default()
                 .fg(Color::Cyan)

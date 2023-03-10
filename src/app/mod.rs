@@ -4,8 +4,8 @@ use self::actions::Actions;
 use self::state::AppState;
 use crate::app::actions::Action;
 use crate::inputs::key::Key;
-use crate::io::IoEvent;
 use crate::io::file::TypingFileDisplay;
+use crate::io::IoEvent;
 
 pub mod actions;
 pub mod state;
@@ -46,11 +46,11 @@ impl App {
                 Action::Typing(c) => {
                     self.state.add_char(c);
                     AppReturn::Continue
-                },
+                }
                 Action::BackwardDeleteChar => {
                     self.state.remove_char();
                     AppReturn::Continue
-                },
+                }
             }
         } else {
             warn!("No action accociated to {}", key);
@@ -150,7 +150,7 @@ impl App {
             Action::Typing(' '),
             Action::Typing('.'),
             Action::Typing('\''),
-            Action::BackwardDeleteChar
+            Action::BackwardDeleteChar,
         ]
         .into();
         self.state = AppState::initialized()

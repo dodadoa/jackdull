@@ -1,11 +1,11 @@
 use std::sync::Arc;
 
 use eyre::Result;
-use log::LevelFilter;
 use jackdull::app::App;
 use jackdull::io::handler::IoAsyncHandler;
 use jackdull::io::IoEvent;
 use jackdull::start_app;
+use log::LevelFilter;
 
 #[tokio::main]
 async fn main() -> Result<()> {

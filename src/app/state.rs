@@ -11,9 +11,9 @@ pub enum AppState {
         typed_text: String,
         to_type: String,
         words_count: u32,
-        typing_information: TypingFileDisplay
+        typing_information: TypingFileDisplay,
     },
-    Menu
+    Menu,
 }
 
 impl AppState {
@@ -27,7 +27,7 @@ impl AppState {
             from: "".to_owned(),
             content: "".to_owned(),
             url: "".to_owned(),
-            words_count: 0
+            words_count: 0,
         };
 
         Self::Initialized {
@@ -36,7 +36,7 @@ impl AppState {
             typed_text,
             to_type,
             words_count,
-            typing_information
+            typing_information,
         }
     }
 
@@ -67,7 +67,12 @@ impl AppState {
     }
 
     pub fn is_finished(&self) -> bool {
-        if let Self::Initialized { typed_text, to_type, .. } = self {
+        if let Self::Initialized {
+            typed_text,
+            to_type,
+            ..
+        } = self
+        {
             typed_text == to_type
         } else {
             false
@@ -99,13 +104,20 @@ impl AppState {
     }
 
     pub fn set_to_type(&mut self, to_type: String) {
-        if let Self::Initialized { to_type: to_type_mut, .. } = self {
+        if let Self::Initialized {
+            to_type: to_type_mut,
+            ..
+        } = self
+        {
             *to_type_mut = to_type;
         }
     }
 
     pub fn typing_information(&self) -> Option<TypingFileDisplay> {
-        if let Self::Initialized { typing_information, .. } = self {
+        if let Self::Initialized {
+            typing_information, ..
+        } = self
+        {
             Some(typing_information.to_owned())
         } else {
             None
@@ -113,7 +125,11 @@ impl AppState {
     }
 
     pub fn set_typing_information(&mut self, typing_information: TypingFileDisplay) {
-        if let Self::Initialized { typing_information: typing_information_mut, .. } = self {
+        if let Self::Initialized {
+            typing_information: typing_information_mut,
+            ..
+        } = self
+        {
             *typing_information_mut = typing_information;
         }
     }
@@ -137,8 +153,17 @@ impl AppState {
     }
 
     pub fn set_message_finished(&mut self) {
-        if let Self::Initialized { to_type, duration, words_count, .. } = self {
-            let result_text = format!("Finished! Your speed is {:?} WPM", 60 * *words_count as u64 / duration.as_secs());
+        if let Self::Initialized {
+            to_type,
+            duration,
+            words_count,
+            ..
+        } = self
+        {
+            let result_text = format!(
+                "Finished! Your speed is {:?} WPM",
+                60 * *words_count as u64 / duration.as_secs()
+            );
             *to_type = result_text;
         }
     }

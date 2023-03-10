@@ -17,14 +17,12 @@ pub mod inputs;
 pub mod io;
 
 pub async fn start_app(app: &Arc<tokio::sync::Mutex<App>>) -> Result<()> {
-
     let stdout = stdout();
     crossterm::terminal::enable_raw_mode()?;
     let backend = CrosstermBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
     terminal.clear()?;
     terminal.hide_cursor()?;
-
 
     let tick_rate = Duration::from_millis(100);
     let mut events = Events::new(tick_rate);
