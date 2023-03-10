@@ -11,14 +11,17 @@
 - clone this repo
 - `cargo run`
 
-## Todo
+## Todo (prioritised)
 - [x] can type
 - [x] after finish then calculate wpm
 - [x] time up!
+- [x] display text information
 - [ ] menu ui
 - [ ] fix calculating wpm, it seems double calculating
-- [ ] display text information
+- [ ] display the wrong character that player type
+- [ ] progress of typing comparing to end text
+- [ ] release on cargo
+- [ ] build the binary and release in the github repo
 - [ ] more texts
 - [ ] maybe loading text from website ?
 - [ ] make it up to cargo, so can install via `cargo install`
-- [ ] display the wrong character that player type
