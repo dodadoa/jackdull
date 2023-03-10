@@ -1,4 +1,5 @@
 # Jackdull
+[![Build Status](https://dodadoa.semaphoreci.com/badges/jackdull/branches/master.svg?key=d0324582-042b-450c-8772-4ae151a98987)](https://dodadoa.semaphoreci.com/projects/jackdull)
 
 - I got bootstrap from [plop-tui]( https://github.com/ilaborie/plop-tui), hoping the integration between tokio and tui will ease my development
 - texts got from [anarchist library](https://theanarchistlibrary)
