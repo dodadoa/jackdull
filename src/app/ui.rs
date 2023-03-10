@@ -25,8 +25,8 @@ where
         .constraints(
             [
                 Constraint::Length(3),
-                Constraint::Length(20),
-                Constraint::Length(10),
+                Constraint::Length(15),
+                Constraint::Length(15),
                 Constraint::Length(3),
                 Constraint::Length(5),
             ]
@@ -39,7 +39,7 @@ where
 
     let body_chunks = Layout::default()
         .direction(Direction::Vertical)
-        .constraints([Constraint::Min(5), Constraint::Min(5)].as_ref())
+        .constraints([Constraint::Length(5), Constraint::Min(5)].as_ref())
         .split(chunks[1]);
 
     let typing_information = if let Some(typing_information) = app.state().typing_information() {
@@ -117,6 +117,13 @@ fn draw_typing_information<'a>(
     ])
     .style(Style::default().fg(Color::LightCyan))
     .alignment(Alignment::Left)
+    .block(
+        Block::default()
+            .title("Text Information")
+            .border_style(Style::default().fg(Color::White).bg(Color::Black))
+            .borders(Borders::ALL)
+    )
+    
 }
 
 fn draw_typing_text<'a>(text: String) -> Paragraph<'a> {
@@ -125,6 +132,11 @@ fn draw_typing_text<'a>(text: String) -> Paragraph<'a> {
     Paragraph::new(long_text)
         .style(Style::default().fg(Color::LightCyan))
         .alignment(Alignment::Left)
+        .block(
+            Block::default()
+            .border_style(Style::default().fg(Color::White).bg(Color::Black))
+            .borders(Borders::ALL)
+        )
 }
 
 fn draw_typing_from_user<'a>(state: &AppState) -> Paragraph<'a> {
@@ -137,6 +149,11 @@ fn draw_typing_from_user<'a>(state: &AppState) -> Paragraph<'a> {
     Paragraph::new(typing)
         .style(Style::default().fg(Color::LightCyan))
         .alignment(Alignment::Left)
+        .block(
+            Block::default()
+            .border_style(Style::default().fg(Color::White).bg(Color::Black))
+            .borders(Borders::ALL)
+        )
 }
 
 fn draw_duration(duration: &Duration) -> LineGauge {
