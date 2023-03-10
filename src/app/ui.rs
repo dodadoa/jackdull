@@ -26,7 +26,7 @@ where
             [
                 Constraint::Length(3),
                 Constraint::Length(15),
-                Constraint::Length(15),
+                Constraint::Length(5),
                 Constraint::Length(3),
                 Constraint::Length(5),
             ]
@@ -39,7 +39,7 @@ where
 
     let body_chunks = Layout::default()
         .direction(Direction::Vertical)
-        .constraints([Constraint::Length(5), Constraint::Min(5)].as_ref())
+        .constraints([Constraint::Length(5), Constraint::Length(5)].as_ref())
         .split(chunks[1]);
 
     let typing_information = if let Some(typing_information) = app.state().typing_information() {
@@ -116,11 +116,10 @@ fn draw_typing_information<'a>(
         )),
     ])
     .style(Style::default().fg(Color::LightCyan))
-    .alignment(Alignment::Left)
+    .alignment(Alignment::Center)
     .block(
         Block::default()
-            .title("Text Information")
-            .border_style(Style::default().fg(Color::White).bg(Color::Black))
+            .border_style(Style::default().fg(Color::DarkGray))
             .borders(Borders::ALL),
     )
 }
@@ -129,7 +128,7 @@ fn draw_typing_text<'a>(text: String) -> Paragraph<'a> {
     let long_text = Text::from(text);
 
     Paragraph::new(long_text)
-        .style(Style::default().fg(Color::LightCyan))
+        .style(Style::default().fg(Color::White))
         .alignment(Alignment::Left)
         .block(
             Block::default()
