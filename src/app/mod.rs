@@ -155,6 +155,7 @@ impl App {
             Action::Typing(')'),
             Action::Typing('?'),
             Action::Typing(','),
+            Action::Typing('-'),
             Action::BackwardDeleteChar,
         ]
         .into();
