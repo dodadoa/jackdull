@@ -6,7 +6,7 @@ agent:
     os_image: ubuntu2004
   containers:
     - name: main
-      image: semaphoreci/rust:1.46
+      image: rust:1.67
 blocks:
   - name: 'Default'
     task:
