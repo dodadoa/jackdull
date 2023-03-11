@@ -26,9 +26,9 @@ where
             [
                 Constraint::Length(3),
                 Constraint::Length(15),
-                Constraint::Length(5),
                 Constraint::Length(3),
-                Constraint::Length(5),
+                Constraint::Length(3),
+                Constraint::Max(5),
             ]
             .as_ref(),
         )
@@ -145,11 +145,16 @@ fn draw_typing_from_user<'a>(state: &AppState) -> Paragraph<'a> {
     };
 
     Paragraph::new(typing)
-        .style(Style::default().fg(Color::LightCyan))
+        .style(
+            Style::default()
+                .fg(Color::Black)
+                .bg(Color::Cyan)
+                .add_modifier(Modifier::BOLD),
+        )
         .alignment(Alignment::Left)
         .block(
             Block::default()
-                .border_style(Style::default().fg(Color::White).bg(Color::Black))
+                .border_style(Style::default().fg(Color::White).bg(Color::Cyan))
                 .borders(Borders::ALL),
         )
 }

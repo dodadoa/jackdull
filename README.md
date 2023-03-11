@@ -17,9 +17,9 @@
 - [x] after finish then calculate wpm
 - [x] time up!
 - [x] display text information
+- [ ] display the wrong character that player type
 - [ ] menu ui
 - [ ] fix calculating wpm, it seems double calculating
-- [ ] display the wrong character that player type
 - [ ] progress of typing comparing to end text
 - [ ] release on cargo
 - [ ] build the binary and release in the github repo
