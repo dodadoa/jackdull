@@ -20,9 +20,11 @@
 - [ ] display the wrong character that player type
 - [ ] menu ui
 - [ ] fix calculating wpm, it seems double calculating
+- [ ] add accurracy
 - [ ] progress of typing comparing to end text
 - [ ] release on cargo
 - [ ] build the binary and release in the github repo
 - [ ] more texts
 - [ ] maybe loading text from website ?
 - [ ] make it up to cargo, so can install via `cargo install`
+- [ ] play with friends ?
