@@ -17,6 +17,7 @@
 - [x] after finish then calculate wpm
 - [x] time up!
 - [x] display text information
+- [ ] display the current typing character
 - [ ] display the wrong character that player type
 - [ ] menu ui
 - [ ] fix calculating wpm, it seems double calculating

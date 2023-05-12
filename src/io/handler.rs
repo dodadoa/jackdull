@@ -74,4 +74,14 @@ impl IoAsyncHandler {
 
         Ok(())
     }
+
+    async fn process_the_typing(&mut self) -> Result<()> {
+        let mut app = self.app.lock().await;
+        let to_type = app.state().to_type();
+        if let Some(to_type) = to_type {
+            app.state().typed_text();
+        }
+
+        Ok(())
+    }
 }

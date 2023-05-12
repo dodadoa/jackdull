@@ -95,9 +95,9 @@ impl AppState {
         }
     }
 
-    pub fn to_type(&self) -> Option<String> {
+    pub fn to_type(&self) -> Option<Vec<&str>> {
         if let Self::Initialized { to_type, .. } = self {
-            Some(to_type.to_owned())
+            Some(to_type.split("/").collect::<Vec<&str>>())
         } else {
             None
         }

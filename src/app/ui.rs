@@ -1,5 +1,6 @@
 use std::time::Duration;
 
+use log::info;
 use symbols::line;
 use tui::backend::Backend;
 use tui::layout::{Alignment, Constraint, Direction, Layout, Rect};
@@ -61,7 +62,7 @@ where
     let body = draw_typing_information(typing_information.from, typing_information.url);
     rect.render_widget(body, body_chunks[0]);
 
-    let long_text = draw_typing_text(typing_information.content);
+    let long_text = draw_typing_text(typing_information.content, app.state());
     rect.render_widget(long_text, body_chunks[1]);
 
     let typing_from_user = draw_typing_from_user(app.state());
@@ -124,8 +125,13 @@ fn draw_typing_information<'a>(
     )
 }
 
-fn draw_typing_text<'a>(text: String) -> Paragraph<'a> {
+fn draw_typing_text<'a>(text: String, state: &AppState) -> Paragraph<'a> {
     let long_text = Text::from(text);
+
+    let typed_text = state.typed_text();
+    if let Some(typed) = typed_text {
+        info!("typed: {}", typed);
+    }
 
     Paragraph::new(long_text)
         .style(Style::default().fg(Color::White))
